@@ -78,4 +78,14 @@ public class Vala.SourceReference {
 
 		return ("%s:%d.%d-%d.%d".printf (file.get_relative_filename (), begin.line, begin.column, end.line, end.column));
 	}
+
+	/**
+	 * Returns a string representation of this source reference
+	 * which can be used as placeholder in our AST.
+	 *
+	 * @return source-compatible string
+	 */
+	public string to_source_string () {
+		return ("S%d%d%d%d".printf (begin.line, begin.column, end.line, end.column));
+	}
 }
