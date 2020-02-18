@@ -233,7 +233,9 @@ public class Vala.LambdaExpression : Expression {
 		/* lambda expressions should be usable like MemberAccess of a method */
 		symbol_reference = method;
 
-		method.check (context);
+		if (!method.check (context)) {
+			error = true;
+		}
 
 		value_type = new MethodType (method);
 		value_type.value_owned = target_type.value_owned;
@@ -249,7 +251,7 @@ public class Vala.LambdaExpression : Expression {
 
 	public override void get_used_variables (Collection<Variable> collection) {
 		// require captured variables to be initialized
-		if (method.closure) {
+		if (!error && method.closure) {
 			method.get_captured_variables ((Collection<LocalVariable>) collection);
 		}
 	}
